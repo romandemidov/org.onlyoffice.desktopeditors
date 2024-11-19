@@ -43,7 +43,7 @@
                 {
                     "type": "archive",
                     "url": "https://s3.eu-west-1.amazonaws.com/repo-doc-onlyoffice-com/desktop/linux/generic/onlyoffice-desktopeditors-8.2.1-29-x86_64.tar.xz",
-                    "sha256": "601b443654c3e92030d362a80d3e37357e66f2b50f8b9098b55b736f104a6381",
+                    "sha256": "977482fdb48e2fdc31324646d7f95e7bfe0898f2b215d05fc09a13ef12dd5098",
                     "strip-components": 0
                 },
                 {

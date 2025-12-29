@@ -30,8 +30,10 @@ jobs:
         BUILD_NUMBER=${{ github.event.inputs.build }}
         DATE=$(date --iso-8601)
         #replace version
+        echo "replace version"
         sed -i -r "/url/s/([0-9]+).([0-9]+).([0-9]+)/${VERSION}/" ./org.onlyoffice.desktopeditors.json
         #replace build number
+        echo "replace build number"
         sed -i -r "/url/s/-([0-9]+)-/-${BUILD_NUMBER}-/" ./org.onlyoffice.desktopeditors.json
         #replace link to archive to test
         sed -i -e '/url/s|http://download.onlyoffice.com/install|https://s3.eu-west-1.amazonaws.com/repo-doc-onlyoffice-com|' ./org.onlyoffice.desktopeditors.json
@@ -39,12 +41,14 @@ jobs:
         sed -i -e "/url/s|-x64|-${BUILD_NUMBER}-x86_64|" ./org.onlyoffice.desktopeditors.json
         sed -i -e "/url/s|-aarch64|-${BUILD_NUMBER}-aarch64|" ./org.onlyoffice.desktopeditors.json
         #download file from this url
+        echo "download file from this url"
         FILES=$(cat ./org.onlyoffice.desktopeditors.json | grep "url" | awk -F'["]' '{print $(NF-1)}')
         FILE_AMD64=$(echo $FILES | grep x64)
         FILE_ARM64=$(echo $FILES | grep aarch64)
         wget $FILE_AMD64
         wget $FILE_ARM64
         #replace shasums
+        echo "replace shasums"
         SHASUM_AMD64=$(sha256sum $(basename $FILE_AMD64) | awk -F'[ ]' '{print $(1)}')
         SHASUM_ARM64=$(sha256sum $(basename $FILE_ARM64) | awk -F'[ ]' '{print $(1)}')
         OLD_SHASUM_AMD64=$(cat ./org.onlyoffice.desktopeditors.json | grep only-arches.*x86_64 -C 2 | grep sha256 | awk -F'"' '{print $4}')
@@ -55,6 +59,7 @@ jobs:
         sed -i -r "/release version/s/([0-9]+).([0-9]+).([0-9]+)/${VERSION}/" ./org.onlyoffice.desktopeditors.metainfo.xml
         sed -i -r "/release version/s/([0-9]+)-([0-9]+)-([0-9]+)/${DATE}/" ./org.onlyoffice.desktopeditors.metainfo.xml
         #commit changes
+        echo "commit changes"
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git commit -m "Update version to ${VERSION}-${BUILD_NUMBER}" -a

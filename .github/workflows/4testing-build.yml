@@ -41,8 +41,8 @@ jobs:
         echo "download file from this url"
         FILES=$(cat ./org.onlyoffice.desktopeditors.json | grep "url" | awk -F'["]' '{print $(NF-1)}')
         echo "FILES=$FILES"
-        FILE_AMD64=$(echo $FILES | grep x86_64)
-        FILE_ARM64=$(echo $FILES | grep aarch64)
+        FILE_AMD64=$(echo $FILES | tr ' ' '\n' | grep x86_64)
+        FILE_ARM64=$(echo $FILES | tr ' ' '\n' | grep aarch64)
         echo "FILE_AMD64=$FILE_AMD64"
         echo "FILE_ARM64=$FILE_ARM64"
         wget --progress=dot:giga $FILE_AMD64

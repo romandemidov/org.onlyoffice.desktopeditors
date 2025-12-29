@@ -52,8 +52,8 @@ jobs:
         SHASUM_ARM64=$(sha256sum $(basename $FILE_ARM64) | awk -F'[ ]' '{print $(1)}')
         OLD_SHASUM_AMD64=$(cat ./org.onlyoffice.desktopeditors.json | grep only-arches.*x86_64 -C 2 | grep sha256 | awk -F'"' '{print $4}')
         OLD_SHASUM_ARM64=$(cat ./org.onlyoffice.desktopeditors.json | grep only-arches.*aarch64 -C 2 | grep sha256 | awk -F'"' '{print $4}')
-        sed -i -r "s|OLD_SHASUM_AMD64|SHASUM_AMD64|" ./org.onlyoffice.desktopeditors.json
-        sed -i -r "s|OLD_SHASUM_ARM64|SHASUM_ARM64|" ./org.onlyoffice.desktopeditors.json
+        sed -i -r "s|${OLD_SHASUM_AMD64}|${SHASUM_AMD64}|" ./org.onlyoffice.desktopeditors.json
+        sed -i -r "s|${OLD_SHASUM_ARM64}|${SHASUM_ARM64}|" ./org.onlyoffice.desktopeditors.json
         echo "replace matainfo"
         sed -i -r "/release version/s/([0-9]+).([0-9]+).([0-9]+)/${VERSION}/" ./org.onlyoffice.desktopeditors.metainfo.xml
         sed -i -r "/release version/s/([0-9]+)-([0-9]+)-([0-9]+)/${DATE}/" ./org.onlyoffice.desktopeditors.metainfo.xml

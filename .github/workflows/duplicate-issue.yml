@@ -17,7 +17,6 @@ jobs:
     steps:
       - name: Duplicate issue and close original
         env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
           ISSUE_NUMBER: ${{ github.event.inputs.issue_number }}
           TARGET_REPO: ${{ github.event.inputs.target_repo }}
           SOURCE_REPO: ${{ github.repository }}
